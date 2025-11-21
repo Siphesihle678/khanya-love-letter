@@ -8,5 +8,10 @@ export default defineConfig({
     // eslint-disable-next-line no-undef
     port: process.env.PORT ? parseInt(process.env.PORT) : 4173,
     host: '0.0.0.0',
+    allowedHosts: [
+      'khanya-love-letter-production.up.railway.app',
+      '.railway.app',
+      'localhost',
+    ],
   },
 })
