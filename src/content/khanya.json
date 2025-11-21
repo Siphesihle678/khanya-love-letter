@@ -1,0 +1,81 @@
+{
+  "splash": {
+    "tagline": "A story written for one.",
+    "dedication": "For Khanya Mhlungulwana",
+    "signature": "Because this belongs to you, Khanya. My Epiphany."
+  },
+  "traits": [
+    "Strength — you stand tall for yourself and others.",
+    "Compassion — you love openly and fiercely.",
+    "Curiosity — you seek to learn and grow.",
+    "Resilience — you rise when things break.",
+    "Independence — you shape your life on your terms."
+  ],
+  "rose": {
+    "instruction": "Tap each petal to reveal what I adore about you.",
+    "closingMessage": "A rose never apologizes for having thorns, and neither should you.",
+    "cta": "Read the Letter",
+    "reset": "Reset petals"
+  },
+  "letter": {
+    "title": "To the woman I admire",
+    "body": [
+      "Every chapter of your life has carved you into the woman you are — unyielding, bold, and tender in the places most people never notice.",
+      "I don't love you because you need me. I love you because you don't (Mara it wouldn't hurt to rely on my every once in a while).",
+      "A rose never apologizes for having thorns; neither should you. Your strength is not a performance, it's a quiet language that says, \"I can meet the world on my own terms.\"",
+      "Khanya, you've shown me that I can love, and I can love wholeheartedly. You've shown me that I can be happy. You've shown me that I can be caring. You've shown me that I can commit. You are my Epiphany. You forever remind me of the moment I decided to become a better man. Thank you."
+    ],
+    "highlight": "My epiphany."
+  },
+  "chapters": [
+    {
+      "id": "first-meeting",
+      "title": "Chapter 1: The First Time I Saw You",
+      "type": "text",
+      "content": "Khanya. The first time I saw you, I was afraid of you, but I admired you. From the way you carried yourself, from the way you articulated yourself, I saw that you were remarkable. But if I'm being honest, I didn't pay much attention to it at the time. I didn't think much of it then.\n\nBut here's the beautiful thing: when I started getting to know you, when we began talking, when I started understanding you — that's when I truly saw you. I saw a young, cheerful, talkative soul who cared deeply for others. I saw a happy young woman who lived her life exactly as she wanted. I saw a genuine person who wasn't pretending to be anything she wasn't.\n\nFrom the moment I saw you, from the moment we spoke, from the moment we bonded, I genuinely loved you as a friend because you made it effortless. I could be comfortable speaking with you, sharing my secrets, being myself. You were such a remarkable person.\n\nAs time went on, as life unfolded around me, I realized more and more that you were exhibiting the traits, the personality, the essence of the woman I thought could be my wife. That's why I'll ever see you as My Epiphany. You made me realize.\n\nI remember that day quite clearly — thinking about the times we spent together, the person you are, who you are. I had an epiphany, and in that moment, I saw a future with you for the first time in my life. I saw a future with a person, and that person was you.\n\nI know we're going through a rough patch right now, and I know you're also going through a lot. I know that I have not been emotionally available, but I'm going to try."
+    },
+    {
+      "id": "unsent-words",
+      "title": "Chapter 2: Words I Didn't Say",
+      "type": "text",
+      "content": "Khanya, my baby, there's so much I haven't said to you. There's quite a lot, but I want to tell it to you right now.\n\nI feel like you don't know this, and you don't realize it, but Khanya, my baby, you are a very, very strong woman. Out of all the people I've known, you are a woman of incredible strength who stands unwaveringly for what you believe in. You stick by your words. You're not influenced by the people around you. You do you. You're original, unique, one of a kind.\n\nI never tell you this — I don't know why I never tell you this — but you are an amazing woman, and any person would be lucky to have you in their life.\n\nBut most importantly, you feel like home to me. You feel like home, Khanya, my baby. You feel like the home I've always wanted my whole life."
+    },
+    {
+      "id": "My baby",
+      "title": "Chapter 3: ❤️Your beauty❤️",
+      "type": "gallery",
+      "description": "These pictures mark important moments in your life — moments of growth and change.\n\nThe first images, where you're wearing the black dress — that was the first time I saw you like that, my baby. Your beauty at its peak.\n\nThe screenshots from our video calls, the goofy moments — they show how comfortable we became. It didn't matter how you looked because our love had grown that much.\n\nBut the most important ones are your outfit of the day moments. I remember when you felt self-conscious, when you didn't think you were pretty. But then you changed. You started doing outfit of the day, telling yourself and me how beautiful you are. That was a beautiful moment — my baby came out of that so strong. You conquered it. You pulled through and came out amazing. You were slaying every day, looking absolutely stunning.\n\nThese were very important moments, and I wanted to capture them all.",
+      "content": [
+        "/assets/photos/Elegant_Beauty.jpeg",
+        "/assets/photos/Elegant_beauty_2.jpeg",
+        "/assets/photos/Elegant_beauty_3.jpeg",
+        "/assets/photos/Elegant_beauty_4.jpeg",
+        "/assets/photos/Elegant_beauty_5.jpeg",
+        "/assets/photos/Elegant_beauty_6.jpeg",
+        "/assets/photos/OFTD.jpeg",
+        "/assets/photos/Feeling_Pretty.jpeg",
+        "/assets/photos/My_Baby.jpeg",
+        "/assets/photos/My_baby_2.jpeg",
+        "/assets/photos/Phara_Khanya.jpeg",
+        "/assets/photos/Phara_Khanya_2.jpeg",
+        "/assets/photos/Goofy_Khanya.jpeg"
+      ]
+    },
+    {
+      "id": "future",
+      "title": "Chapter 4: My Future With You",
+      "type": "future",
+      "content": "My future with you — I look forward to it. Whenever I think about what's to come, you're always on my mind. I want you now and I want you forever. You are and will forever be a part of my future."
+    }
+  ],
+  "finale": {
+    "quote": "This is your story — I'm just grateful I get to be a sentence in it. But I also look forward to our story, and I believe the first chapter has just begun.",
+    "cta": "music I listen to whenever I think of you",
+    "giftLink": "https://open.spotify.com/playlist/5B75zX2kG12RyGPcVakZZr?si=-FhOwSD_SpW9cW95FzkhoA",
+    "personalMessage": {
+      "title": "My Personal Message",
+      "content": "I've come to a realization that this year, I have expected you to be emotionally available for me whenever I needed you to be, without considering where you were in your life emotionally. I wanted you to be there for me without thinking whether you could be there for me, because I just thought that since you're my girlfriend, since you are the woman I love, you would always be there for me.\n\nI think I became a selfish lover. I wanted to experience love for me, but I believe I wasn't reciprocating, and that eventually led to a lot of problems that we're currently facing right now. It's crazy that I'm only realizing this now.\n\nI'm sorry that I was not available for you emotionally, and I'm sorry that I've not yet become a person whom you can trust with the turmoils, the difficulties, and the challenges going on in your life. I'm sorry I couldn't become that person, because I believe I was always the person who wanted love and support from you.\n\nBut I'm sorry I was not emotionally available for you in the way you needed me to be. I'm working on becoming a man whom you can trust with your feelings, your secrets, and your opinions. Trust me, that's who I want to become for you.\n\nI don't just want you to be the only one who's emotionally available in the relationship, the only one who's taking care of the other person emotionally. I also want to do the same for you, and I promise you I'll work on it.\n\nPlease forgive me for this year. I think a major reason why I was the person I was this year is because, for most of my life, I've had to take care of myself and others, and I've never actually had a person whom I could talk to heart-to-heart about how I felt, what was going on with me. Then you became that person, and I just wanted to do everything all at once, but I didn't take into consideration that I also needed to do the same for you.\n\nSo essentially, what I'm trying to say is: I'm gonna be your man. I'm gonna be there for you in every way that I can be, and I'm gonna make sure that you trust me and that you can rely on me. I promise you, Khanya.\n\nThat's my gift for you for your birthday. I love you, and I hope you have the greatest birthday ever. You're amazing. Happy birthday, Khanya. You're getting older and wiser."
+    }
+  }
+}
+
