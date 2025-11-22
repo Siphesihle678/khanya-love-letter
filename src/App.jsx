@@ -5,8 +5,12 @@ import LetterPage from './components/LetterPage.jsx'
 import Chapters from './components/Chapters.jsx'
 import FinalReveal from './components/FinalReveal.jsx'
 import ComingSoon from './components/ComingSoon.jsx'
+import AdminView from './components/AdminView.jsx'
+import useTracking from './hooks/useTracking.js'
 
 function App() {
+  useTracking() // Track when app is opened
+
   return (
     <div className="min-h-screen bg-ivory text-khanyaPinkDeep">
       <Routes>
@@ -15,6 +19,7 @@ function App() {
         <Route path="/letter" element={<LetterPage />} />
         <Route path="/chapters" element={<Chapters />} />
         <Route path="/finale" element={<FinalReveal />} />
+        <Route path="/admin" element={<AdminView />} />
         <Route path="*" element={<ComingSoon title="Coming Soon" />} />
       </Routes>
     </div>

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion as Motion, AnimatePresence } from 'framer-motion'
 import content from '../content/khanya.json'
 import HomeButton from './HomeButton.jsx'
+import Feedback from './Feedback.jsx'
 
 const { quote, cta, giftLink, personalMessage } = content.finale
 
@@ -95,6 +96,8 @@ export default function FinalReveal() {
           </Motion.div>
         )}
       </AnimatePresence>
+
+      <Feedback />
     </div>
   )
 }
