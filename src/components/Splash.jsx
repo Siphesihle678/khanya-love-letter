@@ -9,17 +9,16 @@ export default function Splash() {
   const navigate = useNavigate()
   const { startPlaylist } = useAudio()
 
-  async function handleBegin() {
-    try {
-      // Start audio first and wait for it to begin
-      await startPlaylist()
-      console.log('Audio started successfully')
-    } catch (error) {
-      console.error('Failed to start audio:', error)
-      // Continue anyway - don't block navigation
+  function handleBegin() {
+    // Start audio (non-blocking)
+    if (startPlaylist) {
+      startPlaylist().catch((error) => {
+        console.warn('Failed to start audio:', error)
+        // Continue anyway - don't block navigation
+      })
     }
     
-    // Navigate to next page
+    // Navigate to next page immediately
     navigate('/rose')
   }
 

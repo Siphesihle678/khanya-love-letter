@@ -14,117 +14,132 @@ export default function useAudioPlaylist() {
 
   // Initialize audio element
   useEffect(() => {
-    console.log('Initializing audio with path:', SONG.src)
-    const audio = new Audio(SONG.src)
-    audio.preload = 'auto'
-    audio.loop = true // Simple loop
-    audioRef.current = audio
+    try {
+      console.log('Initializing audio with path:', SONG.src)
+      const audio = new Audio(SONG.src)
+      audio.preload = 'auto'
+      audio.loop = true // Simple loop
+      audioRef.current = audio
 
-    // Wait for audio to be ready
-    const handleCanPlay = () => {
-      setIsReady(true)
-      console.log('Audio ready to play - readyState:', audio.readyState)
-    }
-
-    // Handle loading errors
-    const handleError = (err) => {
-      console.error('Audio loading error:', err)
-      console.error('Audio element error:', audio.error)
-      console.error('Tried to load:', SONG.src)
-      console.error('Audio network state:', audio.networkState)
-      console.error('Audio ready state:', audio.readyState)
-    }
-
-    // Handle when audio can start playing
-    audio.addEventListener('canplaythrough', handleCanPlay)
-    audio.addEventListener('error', handleError)
-    audio.addEventListener('loadeddata', () => {
-      console.log('Audio data loaded')
-    })
-
-    // Try to load the audio
-    audio.load().catch((err) => {
-      console.error('Failed to load audio:', err)
-    })
-
-    return () => {
-      if (audio) {
-        audio.removeEventListener('canplaythrough', handleCanPlay)
-        audio.removeEventListener('error', handleError)
-        audio.pause()
-        audio.src = ''
+      // Wait for audio to be ready
+      const handleCanPlay = () => {
+        setIsReady(true)
+        console.log('Audio ready to play - readyState:', audio.readyState)
       }
+
+      // Handle loading errors
+      const handleError = (err) => {
+        console.warn('Audio loading error:', err)
+        console.warn('Audio element error:', audio.error)
+        console.warn('Tried to load:', SONG.src)
+        // Don't throw - just log the error
+      }
+
+      // Handle when audio can start playing
+      audio.addEventListener('canplaythrough', handleCanPlay)
+      audio.addEventListener('error', handleError)
+      audio.addEventListener('loadeddata', () => {
+        console.log('Audio data loaded')
+      })
+
+      // Try to load the audio
+      audio.load().catch((err) => {
+        console.warn('Failed to load audio:', err)
+        // Don't throw - audio is optional
+      })
+
+      return () => {
+        try {
+          if (audio) {
+            audio.removeEventListener('canplaythrough', handleCanPlay)
+            audio.removeEventListener('error', handleError)
+            audio.pause()
+            audio.src = ''
+          }
+        } catch (cleanupError) {
+          console.warn('Error cleaning up audio:', cleanupError)
+        }
+      }
+    } catch (initError) {
+      console.error('Failed to initialize audio:', initError)
+      // Don't break the app - audio is optional
     }
   }, [])
 
   const startPlaylist = () => {
-    return new Promise((resolve, reject) => {
-      if (hasStarted) {
-        resolve()
-        return
-      }
-
-      const audio = audioRef.current
-      if (!audio) {
-        console.error('Audio element not initialized')
-        reject(new Error('Audio element not initialized'))
-        return
-      }
-
-      // Wait for audio to be ready if it's not yet
-      const attemptPlay = () => {
-        // Reset to beginning if needed
-        if (audio.currentTime > 0) {
-          audio.currentTime = 0
+    return new Promise((resolve) => {
+      try {
+        if (hasStarted) {
+          resolve()
+          return
         }
 
-        const playPromise = audio.play()
+        const audio = audioRef.current
+        if (!audio) {
+          console.warn('Audio element not initialized yet')
+          resolve() // Don't block, just resolve
+          return
+        }
 
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              console.log('Audio started playing')
+        // Wait for audio to be ready if it's not yet
+        const attemptPlay = () => {
+          try {
+            // Reset to beginning if needed
+            if (audio.currentTime > 0) {
+              audio.currentTime = 0
+            }
+
+            const playPromise = audio.play()
+
+            if (playPromise !== undefined) {
+              playPromise
+                .then(() => {
+                  console.log('Audio started playing')
+                  setIsPlaying(true)
+                  setHasStarted(true)
+                  resolve()
+                })
+                .catch((err) => {
+                  console.warn('Failed to play audio:', err)
+                  // Don't reject, just resolve so navigation isn't blocked
+                  resolve()
+                })
+            } else {
+              // Fallback for older browsers
               setIsPlaying(true)
               setHasStarted(true)
               resolve()
-            })
-            .catch((err) => {
-              console.error('Failed to play audio:', err)
-              console.error('Audio element state:', {
-                readyState: audio.readyState,
-                networkState: audio.networkState,
-                error: audio.error,
-              })
-              reject(err)
-            })
-        } else {
-          // Fallback for older browsers
-          setIsPlaying(true)
-          setHasStarted(true)
-          resolve()
+            }
+          } catch (err) {
+            console.warn('Error in attemptPlay:', err)
+            resolve() // Always resolve to not block
+          }
         }
-      }
 
-      // Check if audio is ready
-      if (audio.readyState >= 2) {
-        // HAVE_CURRENT_DATA or higher - ready to play
-        attemptPlay()
-      } else {
-        // Wait for audio to load
-        const handleCanPlay = () => {
-          audio.removeEventListener('canplaythrough', handleCanPlay)
+        // Check if audio is ready
+        if (audio.readyState >= 2) {
+          // HAVE_CURRENT_DATA or higher - ready to play
           attemptPlay()
-        }
-        audio.addEventListener('canplaythrough', handleCanPlay)
-        
-        // Timeout after 3 seconds
-        setTimeout(() => {
-          audio.removeEventListener('canplaythrough', handleCanPlay)
-          if (!hasStarted) {
-            console.warn('Audio took too long to load, attempting to play anyway')
+        } else {
+          // Wait for audio to load
+          const handleCanPlay = () => {
+            audio.removeEventListener('canplaythrough', handleCanPlay)
             attemptPlay()
           }
-        }, 3000)
+          audio.addEventListener('canplaythrough', handleCanPlay)
+          
+          // Timeout after 2 seconds - don't wait too long
+          setTimeout(() => {
+            audio.removeEventListener('canplaythrough', handleCanPlay)
+            if (!hasStarted) {
+              console.warn('Audio taking time to load, attempting to play anyway')
+              attemptPlay()
+            }
+          }, 2000)
+        }
+      } catch (err) {
+        console.error('Error in startPlaylist:', err)
+        resolve() // Always resolve to not block navigation
       }
     })
   }
