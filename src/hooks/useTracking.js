@@ -1,31 +1,32 @@
 import { useEffect } from 'react'
 
-// Simple tracking - logs when app is opened
-// You can extend this to send to an API endpoint later
+// API endpoint - update this with your Railway API URL
+const API_URL = import.meta.env.VITE_API_URL || ''
+
 export default function useTracking() {
   useEffect(() => {
     const trackVisit = () => {
       const visitData = {
-        timestamp: new Date().toISOString(),
         userAgent: navigator.userAgent,
         url: window.location.href,
       }
 
-      // Store in localStorage (you can see this in browser dev tools)
+      // Store in localStorage as backup
       const visits = JSON.parse(localStorage.getItem('app_visits') || '[]')
-      visits.push(visitData)
+      visits.push({ ...visitData, timestamp: new Date().toISOString() })
       localStorage.setItem('app_visits', JSON.stringify(visits))
       localStorage.setItem('last_visit', new Date().toISOString())
 
-      // Optional: Send to an API endpoint
-      // Uncomment and add your API endpoint when ready:
-      /*
-      fetch('YOUR_API_ENDPOINT/track', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(visitData),
-      }).catch(console.error)
-      */
+      // Send to API if URL is configured
+      if (API_URL) {
+        fetch(`${API_URL}/track`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(visitData),
+        }).catch((error) => {
+          console.warn('Failed to track visit:', error)
+        })
+      }
     }
 
     trackVisit()

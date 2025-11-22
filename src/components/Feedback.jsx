@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { motion as Motion, AnimatePresence } from 'framer-motion'
 
+// API endpoint - update this with your Railway API URL
+const API_URL = import.meta.env.VITE_API_URL || ''
+
 export default function Feedback() {
   const [isOpen, setIsOpen] = useState(false)
   const [feedback, setFeedback] = useState('')
@@ -10,24 +13,24 @@ export default function Feedback() {
     e.preventDefault()
     
     const feedbackData = {
-      timestamp: new Date().toISOString(),
       message: feedback,
     }
 
-    // Store in localStorage
+    // Store in localStorage as backup
     const allFeedback = JSON.parse(localStorage.getItem('app_feedback') || '[]')
-    allFeedback.push(feedbackData)
+    allFeedback.push({ ...feedbackData, timestamp: new Date().toISOString() })
     localStorage.setItem('app_feedback', JSON.stringify(allFeedback))
 
-    // Optional: Send to API endpoint
-    // Uncomment and add your API endpoint when ready:
-    /*
-    fetch('YOUR_API_ENDPOINT/feedback', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(feedbackData),
-    }).catch(console.error)
-    */
+    // Send to API if URL is configured
+    if (API_URL) {
+      fetch(`${API_URL}/feedback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(feedbackData),
+      }).catch((error) => {
+        console.warn('Failed to send feedback:', error)
+      })
+    }
 
     setSubmitted(true)
     setFeedback('')

@@ -1,21 +1,72 @@
 import { useState, useEffect } from 'react'
 
+// API endpoint - update this with your Railway API URL
+const API_URL = import.meta.env.VITE_API_URL || ''
+
 export default function AdminView() {
   const [visits, setVisits] = useState([])
   const [feedback, setFeedback] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Load data from localStorage
     const loadData = () => {
-      const visitData = JSON.parse(localStorage.getItem('app_visits') || '[]')
-      const feedbackData = JSON.parse(localStorage.getItem('app_feedback') || '[]')
-      
-      setVisits(visitData)
-      setFeedback(feedbackData)
+      if (API_URL) {
+        // Fetch from API
+        Promise.all([
+          fetch(`${API_URL}/visits`).then((res) => res.json()),
+          fetch(`${API_URL}/feedback`).then((res) => res.json()),
+        ])
+          .then(([visitsRes, feedbackRes]) => {
+            if (visitsRes.success) setVisits(visitsRes.visits || [])
+            if (feedbackRes.success) setFeedback(feedbackRes.feedback || [])
+            setLoading(false)
+          })
+          .catch((error) => {
+            console.warn('Failed to fetch from API, using localStorage:', error)
+            // Fallback to localStorage
+            const visitData = JSON.parse(localStorage.getItem('app_visits') || '[]')
+            const feedbackData = JSON.parse(localStorage.getItem('app_feedback') || '[]')
+            setVisits(visitData)
+            setFeedback(feedbackData)
+            setLoading(false)
+          })
+      } else {
+        // Use localStorage if no API URL
+        const visitData = JSON.parse(localStorage.getItem('app_visits') || '[]')
+        const feedbackData = JSON.parse(localStorage.getItem('app_feedback') || '[]')
+        setVisits(visitData)
+        setFeedback(feedbackData)
+        setLoading(false)
+      }
     }
 
     requestAnimationFrame(loadData)
   }, [])
+
+  function refreshData() {
+    setLoading(true)
+    if (API_URL) {
+      Promise.all([
+        fetch(`${API_URL}/visits`).then((res) => res.json()),
+        fetch(`${API_URL}/feedback`).then((res) => res.json()),
+      ])
+        .then(([visitsRes, feedbackRes]) => {
+          if (visitsRes.success) setVisits(visitsRes.visits || [])
+          if (feedbackRes.success) setFeedback(feedbackRes.feedback || [])
+          setLoading(false)
+        })
+        .catch((error) => {
+          console.error('Failed to refresh:', error)
+          setLoading(false)
+        })
+    } else {
+      const visitData = JSON.parse(localStorage.getItem('app_visits') || '[]')
+      const feedbackData = JSON.parse(localStorage.getItem('app_feedback') || '[]')
+      setVisits(visitData)
+      setFeedback(feedbackData)
+      setLoading(false)
+    }
+  }
 
   function clearData() {
     if (confirm('Are you sure you want to clear all tracking data?')) {
@@ -48,6 +99,13 @@ export default function AdminView() {
 
         <div className="mb-6 flex gap-4">
           <button
+            onClick={refreshData}
+            disabled={loading}
+            className="px-4 py-2 rounded-full bg-khanyaPink text-ivory font-medium hover:scale-105 transition disabled:opacity-50"
+          >
+            {loading ? 'Loading...' : 'Refresh'}
+          </button>
+          <button
             onClick={exportData}
             className="px-4 py-2 rounded-full bg-khanyaPink text-ivory font-medium hover:scale-105 transition"
           >
@@ -57,9 +115,16 @@ export default function AdminView() {
             onClick={clearData}
             className="px-4 py-2 rounded-full border border-khanyaPinkDeep/40 text-khanyaPinkDeep hover:bg-white transition"
           >
-            Clear Data
+            Clear Local Data
           </button>
         </div>
+        {!API_URL && (
+          <div className="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p className="text-sm text-yellow-800">
+              ⚠️ API URL not configured. Showing data from localStorage only. Set VITE_API_URL environment variable to use the API.
+            </p>
+          </div>
+        )}
 
         <div className="space-y-8">
           <div className="bg-white/85 rounded-2xl p-6 shadow-lg">
